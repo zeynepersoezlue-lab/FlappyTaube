@@ -17,9 +17,11 @@ public class PlayerController : MonoBehaviour
 
    private Rigidbody2D rg;
    private Vector3 startPosition;
+   private SpriteRenderer sr;
 
    private void Awake(){
     rg = GetComponent<Rigidbody2D>();
+    sr = GetComponent<SpriteRenderer>();
    }
 
    void Start(){
@@ -72,6 +74,7 @@ public class PlayerController : MonoBehaviour
 
     AudioManager.Instance.Hit();
     feathers.Play();
+    StartCoroutine(HitFlash());
     StartCoroutine(DieSoundDelay());
 
     GameManager.Instance.GameOver();
@@ -82,6 +85,11 @@ public class PlayerController : MonoBehaviour
     AudioManager.Instance.Die();
 
    }
+   IEnumerator HitFlash(){
+    sr.material.SetFloat("_FlashAmount", 1f);     
+    yield return new WaitForSeconds(0.15f);
+    sr.material.SetFloat("_FlashAmount", 0f);     
+    }
 
    public void ResetPlayer(){
     rg.simulated = false;
