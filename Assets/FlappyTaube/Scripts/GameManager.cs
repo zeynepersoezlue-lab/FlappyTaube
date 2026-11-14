@@ -212,15 +212,19 @@ public class GameManager : MonoBehaviour
     playbutton.SetActive(true);
     score.gameObject.SetActive(false);
     exitButton.SetActive(true);
+    SetGameOverEffect(false);
+    AudioManager.Instance.MusicOn();
    }
 
    public void QuitGame(){
-    
     #if UNITY_EDITOR
-    UnityEditor.EditorApplication.isPlaying = false;
+    UnityEditor.EditorApplication.isPlaying = false;  
+    #elif UNITY_WEBGL
+    QuitToMenu();                                     
     #else
-    Application.Quit();
+    Application.Quit();                                
     #endif
+    
     }
 
     private void SetGameOverEffect(bool on){
