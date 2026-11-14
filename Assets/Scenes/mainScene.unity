@@ -487,7 +487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PipeSwner
   pipePrefab: {fileID: 8057235212352960384, guid: 9df24344a4b674229bb6aefdd00e656e, type: 3}
-  spawnRate: 2
+  pipeDistance: 3
   heightOffset: 1.5
   poolSize: 10
 --- !u!1 &519420028
@@ -1351,6 +1351,10 @@ MonoBehaviour:
   gameOverBestScore: {fileID: 745322947}
   playerController: {fileID: 2026994785}
   pipeSpawner: {fileID: 508102648}
+  startSpeed: 1.8
+  speedStep: 0.2
+  pointsPerStep: 5
+  maxSpeed: 3.5
 --- !u!4 &893959751
 Transform:
   m_ObjectHideFlags: 0
@@ -2425,7 +2429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dc6f5388354408dab0d8277b753924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundScroler
-  scrollSpeed: 0.15
+  speedFactor: 0.1
 --- !u!1 &1757652823
 GameObject:
   m_ObjectHideFlags: 0
