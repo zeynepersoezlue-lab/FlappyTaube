@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2007051996901335194}
   - component: {fileID: 5124787011102329212}
+  - component: {fileID: 1778711865577151997}
   m_Layer: 0
   m_Name: punkteTrigger
   m_TagString: Untagged
@@ -78,6 +79,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.3, y: 3.1}
   m_EdgeRadius: 0
+--- !u!114 &1778711865577151997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139901467640106731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd402a49d5c1b468c9686fc726a9c3fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreZone
 --- !u!1 &6656420780471879191
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +218,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -215,7 +228,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 8, y: 41.28252}
+  m_Size: {x: 3.8, y: 39.7}
   m_EdgeRadius: 0
 --- !u!1 &6918989780272395836
 GameObject:
@@ -344,7 +357,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.3}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -354,7 +367,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 8, y: 41.28252}
+  m_Size: {x: 3.8, y: 39.7}
   m_EdgeRadius: 0
 --- !u!1 &8057235212352960384
 GameObject:
@@ -403,3 +416,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d58f8dfc19ecf4593ac8717a0c3f882b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PipeController
+  moveSpeed: 1
+  hideXPosition: -10
