@@ -1,6 +1,9 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +38,13 @@ public class GameManager : MonoBehaviour
 
    [Header("Pause")]
    [SerializeField] private GameObject pausePanel;
+
+   [Header("Post Processing")]
+   [SerializeField] private Volume volume;
+   private ColorAdjustments colorAdjustments;
+   private Vignette vignette;
+   [SerializeField] private float fadeDuration = 1f;
+   private Coroutine effectRoutine;
 
    private GameState stateBeforePause;
    private float gameOverTime;
@@ -86,6 +96,10 @@ public class GameManager : MonoBehaviour
     pausePanel.SetActive(false);
     AudioManager.Instance.MusicOn(); 
     exitButton.SetActive(true);
+
+    volume.profile.TryGet(out colorAdjustments);
+    volume.profile.TryGet(out vignette);
+    SetGameOverEffect(false);
    }
 
    public void PlayButtonClick(){
@@ -100,6 +114,8 @@ public class GameManager : MonoBehaviour
     gameReadyPanel.SetActive(true);
     score.gameObject.SetActive(true);
     exitButton.SetActive(false);
+
+    SetGameOverEffect(false);
 
     ResetGame();
    }
@@ -124,6 +140,7 @@ public class GameManager : MonoBehaviour
     playbutton.SetActive(true);
     AudioManager.Instance.MusicOff();
     exitButton.SetActive(true);
+    SetGameOverEffect(true);
 
 
     gameOverScore.text = CurrentScore.ToString();
@@ -205,4 +222,24 @@ public class GameManager : MonoBehaviour
     Application.Quit();
     #endif
     }
+
+    private void SetGameOverEffect(bool on){
+    if (effectRoutine != null) StopCoroutine(effectRoutine);
+
+    if (on) effectRoutine = StartCoroutine(FadeGameOverEffect());
+    else {
+        colorAdjustments.saturation.Override(0f);
+        vignette.intensity.Override(0f);
+        }
+    }
+    
+    private IEnumerator FadeGameOverEffect(){
+        float t = 0f;
+        while (t < 1f){
+            t += Time.deltaTime / fadeDuration;
+            colorAdjustments.saturation.Override(Mathf.Lerp(0f, -40f, t));  
+            vignette.intensity.Override(Mathf.Lerp(0f, 0.45f, t));         
+            yield return null;  
+    }
+}
 }
