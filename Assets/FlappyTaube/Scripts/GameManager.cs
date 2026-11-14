@@ -25,6 +25,14 @@ public class GameManager : MonoBehaviour
    [SerializeField] private PlayerController playerController;
    [SerializeField] private PipeSpawner pipeSpawner;
 
+   [Header("Difficulty")]
+   [SerializeField] private float startSpeed = 1.5f;
+   [SerializeField] private float speedStep = 0.1f;
+   [SerializeField] private int pointsPerStep = 5;
+   [SerializeField] private float maxSpeed = 3f;
+
+   public float PipeSpeed{ get; private set; }
+
    private const string BEST_SCORE_KEY = "BestScore";  
 
    private GameState gameState = GameState.Home;
@@ -60,6 +68,7 @@ public class GameManager : MonoBehaviour
 
    private void Start() {
     gameState = GameState.Home;
+    PipeSpeed = startSpeed;
     logo.SetActive(true);
     playbutton.SetActive(true);
 
@@ -84,6 +93,7 @@ public class GameManager : MonoBehaviour
 
    private void ResetGame(){
 
+    PipeSpeed = startSpeed;
     playerController.ResetPlayer();
     pipeSpawner.ResetSpawner();
    }
@@ -112,5 +122,9 @@ public class GameManager : MonoBehaviour
     CurrentScore++;
 
     AudioManager.Instance.Score();
+
+    if(CurrentScore % pointsPerStep == 0) {
+        PipeSpeed = Mathf.Min(PipeSpeed + speedStep, maxSpeed);
+    }
    }
 }

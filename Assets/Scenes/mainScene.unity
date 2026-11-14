@@ -487,8 +487,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PipeSwner
   pipePrefab: {fileID: 8057235212352960384, guid: 9df24344a4b674229bb6aefdd00e656e, type: 3}
-  spawnRate: 3
-  heightOffset: 0.8
+  spawnRate: 2
+  heightOffset: 1.5
   poolSize: 10
 --- !u!1 &519420028
 GameObject:
@@ -2425,7 +2425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91dc6f5388354408dab0d8277b753924, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GroundScroler
-  scrollSpeed: 0.1
+  scrollSpeed: 0.15
 --- !u!1 &1757652823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2814,7 +2814,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 0.85, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

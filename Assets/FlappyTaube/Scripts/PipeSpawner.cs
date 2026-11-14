@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class PipeSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject pipePrefab;
-    [SerializeField] private float spawnRate = 2f;
+    [SerializeField] private float pipeDistance = 3f;
     [SerializeField] private float heightOffset = 0.8f;
     [SerializeField] private int poolSize = 10;
 
@@ -23,11 +23,13 @@ public class PipeSpawner : MonoBehaviour
     private void Update(){
         if(GameManager.Instance.GameState != GameState.Playing) return;
 
+        float spawnInterval = pipeDistance / GameManager.Instance.PipeSpeed; 
+
         timer += Time.deltaTime;
 
-        while(timer > spawnRate){
+        while(timer > spawnInterval){
             SpawnPipe();
-            timer -= spawnRate;
+            timer -= spawnInterval;
         }
     }
 

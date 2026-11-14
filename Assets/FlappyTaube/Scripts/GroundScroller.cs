@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class GroundScroler : MonoBehaviour
+public class GroundScroller : MonoBehaviour
 {
-    [SerializeField] private float scrollSpeed = 2f;
+    [SerializeField] private float speedFactor = 0.1f;
 
     private Material material;
     private Vector2 offset;
@@ -17,7 +17,7 @@ public class GroundScroler : MonoBehaviour
         if (GameManager.Instance.GameState == GameState.GameOver)
             return;
 
-        offset.x += scrollSpeed * Time.deltaTime;
+        offset.x += speedFactor * GameManager.Instance.PipeSpeed * Time.deltaTime;
 
         material.mainTextureOffset = offset;
     }
