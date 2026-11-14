@@ -6,5 +6,7 @@ GetReady,
 
 Playing,
 
+Paused,
+
 GameOver
 }

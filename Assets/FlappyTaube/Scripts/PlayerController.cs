@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour
 
    public void OnTap(InputAction.CallbackContext context){
     if(!context.performed) return;
+    if(GameManager.Instance.GameState == GameState.Paused) return;
     if(GameManager.Instance.GameState == GameState.Home || GameManager.Instance.GameState == GameState.GameOver) return; 
 
     if(GameManager.Instance.GameState == GameState.GetReady){

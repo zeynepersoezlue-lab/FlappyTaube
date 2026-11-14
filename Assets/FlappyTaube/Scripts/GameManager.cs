@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
 
    [SerializeField] private GameObject logo;
    [SerializeField] private GameObject playbutton;
+   [SerializeField] private GameObject exitButton;
 
    [Header ("Score")]
    [SerializeField] private TMP_Text score;
@@ -30,6 +32,12 @@ public class GameManager : MonoBehaviour
    [SerializeField] private float speedStep = 0.1f;
    [SerializeField] private int pointsPerStep = 5;
    [SerializeField] private float maxSpeed = 3f;
+
+   [Header("Pause")]
+   [SerializeField] private GameObject pausePanel;
+
+   private GameState stateBeforePause;
+   private float gameOverTime;
 
    public float PipeSpeed{ get; private set; }
 
@@ -75,11 +83,15 @@ public class GameManager : MonoBehaviour
     gameOverPanel.SetActive(false);
     gameReadyPanel.SetActive(false);
     score.gameObject.SetActive(false);
+    pausePanel.SetActive(false);
+    AudioManager.Instance.MusicOn(); 
+    exitButton.SetActive(true);
    }
 
    public void PlayButtonClick(){
     gameState = GameState.GetReady;
     CurrentScore = 0;
+    AudioManager.Instance.MusicOn();
 
     logo.SetActive(false);
     playbutton.SetActive(false);
@@ -87,6 +99,7 @@ public class GameManager : MonoBehaviour
     gameOverPanel.SetActive(false);
     gameReadyPanel.SetActive(true);
     score.gameObject.SetActive(true);
+    exitButton.SetActive(false);
 
     ResetGame();
    }
@@ -104,10 +117,14 @@ public class GameManager : MonoBehaviour
    }
 
    public void GameOver(){
+    gameOverTime = Time.time;
     gameState = GameState.GameOver;
     score.gameObject.SetActive(false);
     gameOverPanel.SetActive(true);
     playbutton.SetActive(true);
+    AudioManager.Instance.MusicOff();
+    exitButton.SetActive(true);
+
 
     gameOverScore.text = CurrentScore.ToString();
     if(CurrentScore > BestScore){
@@ -127,4 +144,65 @@ public class GameManager : MonoBehaviour
         PipeSpeed = Mathf.Min(PipeSpeed + speedStep, maxSpeed);
     }
    }
+   
+   private void Update(){
+    var kb = Keyboard.current;
+    if (kb == null) return;
+
+    if (kb.pKey.wasPressedThisFrame || kb.escapeKey.wasPressedThisFrame)
+        TogglePause();
+
+    if (kb.spaceKey.wasPressedThisFrame){
+        
+        if (gameState == GameState.Home)
+            PlayButtonClick();                                  
+        else if (gameState == GameState.Paused)
+            ResumeGame();                                       
+        else if (gameState == GameState.GameOver && Time.time - gameOverTime > 0.5f)
+            PlayButtonClick();                                 
+            
+    }
+   }
+
+   public void TogglePause(){
+    
+    if(gameState == GameState.Paused) ResumeGame();
+    else if(gameState == GameState.Playing || gameState == GameState.GetReady)
+            PauseGame();
+   }
+
+   public void PauseGame(){
+    stateBeforePause = gameState;
+    gameState = GameState.Paused;
+    Time.timeScale = 0f;
+    pausePanel.SetActive(true);
+   }
+
+   public void ResumeGame(){
+    pausePanel.SetActive(false);
+    Time.timeScale = 1f;
+    gameState = stateBeforePause;
+   }
+
+   public void QuitToMenu(){
+    pausePanel.SetActive(false);
+    Time.timeScale = 1f;
+    ResetGame();
+    gameState = GameState.Home;
+    gameReadyPanel.SetActive(false);
+    gameOverPanel.SetActive(false);
+    logo.SetActive(true);
+    playbutton.SetActive(true);
+    score.gameObject.SetActive(false);
+    exitButton.SetActive(true);
+   }
+
+   public void QuitGame(){
+    
+    #if UNITY_EDITOR
+    UnityEditor.EditorApplication.isPlaying = false;
+    #else
+    Application.Quit();
+    #endif
+    }
 }
