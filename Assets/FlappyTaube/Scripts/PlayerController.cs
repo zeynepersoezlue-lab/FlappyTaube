@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
    [SerializeField] private float jumpForce = 5f;
    [SerializeField] private float rotationSpeed = 20f;
 
+   [Header("VFX")]
+   [SerializeField] private ParticleSystem feathers;
+
    private Rigidbody2D rg;
    private Vector3 startPosition;
 
@@ -68,6 +71,7 @@ public class PlayerController : MonoBehaviour
        return;
 
     AudioManager.Instance.Hit();
+    feathers.Play();
     StartCoroutine(DieSoundDelay());
 
     GameManager.Instance.GameOver();
